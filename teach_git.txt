@@ -3,3 +3,4 @@ Using this file to teach how to use git.
 Edit this file.
 
 practice
+name
