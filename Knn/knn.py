@@ -1,35 +1,37 @@
 import pandas as pd
 def datainput(datacsv,testcsv):
-    data=pd.read_csv(datacsv)
-    test=pd.read_csv(testcsv)
-    return data,test
-def distance(data,test):
-    d = pd.DataFrame()
-    for a in range(len(test.index)):
-        data[a] = ((data.rWC-test.rWC[a])**2+(data.rCh-test.rCh[a])**2)**0.5
-        d = data
-    return d
-def acck(test,d,k):
+    data_fram = pd.read_csv(datacsv)
+    test_fram = pd.read_csv(testcsv)
+    print(test_fram)
+    return data_fram,test_fram
+def distance(data_fram,test_fram):
+    for a in range(len(test_fram.index)):
+        data_fram[a] = ((data_fram.rWC-test_fram.rWC[a])**2+(data_fram.rCh-test_fram.rCh[a])**2)**0.5
+        print(data_fram)
+    return data_fram
+def accuracy (test_fram,data_fram,k):
     ac = 0
-    acc = 0
-    i = pd.DataFrame()
-    test['pre']='0'
-    for a in range(len(test.index)):        
-        for ik in reversed(range(1,k+1)):
-            i = d.sort_values([a], ascending=True).head(n=ik)
-            test.loc[a,'pre'] = pd.value_counts(i['Type']).idxmax()
-            if (len(pd.value_counts(i['Type']))) == 1 or (pd.value_counts(i['Type'])[0] > pd.value_counts(i['Type'])[1]):
+    acpercentage = 0
+    data_fram_sort = pd.DataFrame()
+    test_fram['pre'] = '0'
+    for a in range(len(test_fram.index)):        
+        for ik in reversed(range(1, k+1)):
+            data_fram_sort = data_fram.sort_values([a], ascending=True).head(n=ik)
+            test_fram.loc[a,'pre'] = pd.value_counts(data_fram_sort['Type']).idxmax()
+            if (len(pd.value_counts(data_fram_sort['Type']))) == 1 or (pd.value_counts(data_fram_sort['Type'])[0] > pd.value_counts(data_fram_sort['Type'])[1]):
                 break    
-        if test.loc[a,'pre'] == test.loc[a,'Type']:
-            ac +=1
-            acc = ac/len(test.index)
-    return test,acc
+        if test_fram.loc[a,'pre'] == test_fram.loc[a,'Type']:
+            ac += 1
+            acpercentage = ac/len(test_fram.index)
+    return test_fram,acpercentage
+
+
 def knn(datacsv,testcsv,k):
     data,test = datainput('atomsradii.csv','testing.csv')
-    d = distance(data,test)
-    dic={}
+    data_fram = distance(data,test)
+    accuracy_dic = {}
     for ii in range(1,k+1): 
-        te,ack = acck(test,d,ii)
-        key={ii:ack}
-        dic.update(key)
-    return te,dic
+        test_pred,ack = accuracy(test,data_fram,ii)
+        key = {ii:ack}
+        accuracy_dic.update(key)
+    return test,accuracy_dic
