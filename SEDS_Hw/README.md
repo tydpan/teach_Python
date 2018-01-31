@@ -6,4 +6,4 @@
 - Programming using the Python scientific stack, including numpy, pandas, and matplotlib.
 - Developing unit tests that validate important aspects of the project implementation, and, more broadly, using test-driven development to build software.
 - Searching, evaluating, and integrating into a project an externally developed Python packages as well as creating your own Python packages.
-For more information, please visit: https://uwdirect.github.io
+#### For more information, please visit: https://uwdirect.github.io.
